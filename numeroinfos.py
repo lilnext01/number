@@ -266,7 +266,7 @@ def numverifyScan():
     if not args.scanner == 'numverify' and not args.scanner == 'all':
         return -1
 
-    print(code_info + 'Iniciando Numverify.com scan...')
+    print(code_info + 'Iniciando numverify.com buscando...')
 
     requestSecret = ''
     resp = requests.get('https://numverify.com/')
