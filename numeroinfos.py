@@ -8,19 +8,19 @@ try:
     import atexit
     import argparse
     import random
+    import time
+    import os
+    
 except KeyboardInterrupt:
     print('[!] Fechando.')
     sys.exit()
 except:
-    print('[!] Requisitos ausentes. Tente executar python3 -m pip install -r requisitos.txt')
+    print('[Warning!] Requisitos ausentes. Tente executar python3 -m pip install -r requisitos.txt')
     sys.exit()
 
 def banner():
-    print(" \033[91m                             ")
-    print("                              ")
-    print("    ▁ ▂ ▄ ▅ ▆ ▇ █ LilNext █ ▇ ▆ ▅ ▄ ▂ ▁             ")
-    print("                              ")
-    print("  \033[0m                                     ")
+    os.system('clear')
+    os.system("toilet -fmono12 -F gay LilNext")
     print(" versão do script. {}".format(__version__))
     print(" Coded by: @lilnext")
     print("\n")
@@ -220,7 +220,7 @@ def localScan(InputNumber):
     global numberCountry
 
     print(code_info + 'Executando verificação local...')
-
+    time.sleep(1)
     FormattedPhoneNumber = "+" + formatNumber(InputNumber)
 
     try:
@@ -239,20 +239,26 @@ def localScan(InputNumber):
 
         localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
         internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
-
-        print(code_result + 'Formato internacional: {}'.format(internationalNumber))
-        print(code_result + 'Formato local: 0{}'.format(localNumber))
-        print(code_result + 'Código do país: {}'.format(numberCountryCode))
-        print(code_result + 'Localização: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
-        print(code_result + 'Transportadora: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
-        print(code_result + 'Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
+        print('')
+        print(code_result + '»Formato internacional: {}'.format(internationalNumber))
+        print
+        print(code_result + '»Formato local: 0{}'.format(localNumber))
+        print
+        print(code_result + '»Código do país: {}'.format(numberCountryCode))
+        print
+        print(code_result + '»Localização: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
+        print
+        print(code_result + '»Transportadora: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
+        print
+        print(code_result + '»Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
+        print
         for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
-            print(code_result + 'Fuso horário: {}'.format(timezoneResult))
-
+            print(code_result + '»Fuso horário: {}'.format(timezoneResult))
+            print
         if phonenumbers.is_possible_number(PhoneNumberObject):
-            print(code_info + 'O número é válido e possível.')
+            print(code_info + '\033[1;34m>O número é válido e possível. ')
         else:
-            print(code_warning + 'O número é válido, mas pode não ser possível.')
+            print(code_warning + '\033[1;36m# >O número é válido, mas pode não ser possível.  #')
 
 def numverifyScan():
     global number
@@ -301,16 +307,16 @@ def numverifyScan():
 
     InternationalNumber = '({}){}'.format(data["country_prefix"], data["local_format"])
 
-    print((code_result + "Número: ({}) {}").format(data["country_prefix"],data["local_format"]))
-    print((code_result + "Cidade: {} ({})").format(data["country_name"],data["country_code"]))
-    print((code_result + "Localização: {}").format(data["location"]))
-    print((code_result + "Operadora: {}").format(data["carrier"]))
-    print((code_result + "Line type: {}").format(data["line_type"]))
+    print((code_result + ">>>Número: ({}) {}").format(data["country_prefix"],data["local_format"]))
+    print((code_result + ">>>Cidade: {} ({})").format(data["country_name"],data["country_code"]))
+    print((code_result + ">>>Localização: {}").format(data["location"]))
+    print((code_result + ">>>Operadora: {}").format(data["carrier"]))
+    print((code_result + ">>>Line type: {}").format(data["line_type"]))
 
     if data["line_type"] == 'landline':
-        print((code_warning + "This is most likely a landline, but it can still be a fixed VoIP number."))
+        print((code_warning + "Provavelmente é um telefone fixo, mas ainda pode ser um número VoIP fixo."))
     elif data["line_type"] == 'mobile':
-        print((code_warning + "This is most likely a mobile number, but it can still be a VoIP number."))
+        print((code_warning + "Este é provavelmente um número de celular, mas ainda pode ser um número VoIP."))
 
 def ovhScan():
     global localNumber
@@ -337,10 +343,10 @@ def ovhScan():
 
         for voip_number in data:
             if voip_number['number'] == askedNumber:
-                print((code_info + "1 result found in OVH database"))
-                print((code_result + "Number range: {}".format(voip_number['number'])))
-                print((code_result + "City: {}".format(voip_number['city'])))
-                print((code_result + "Zip code: {}".format(voip_number['zipCode'] if voip_number['zipCode'] is not None else '')))
+                print((code_info + ">>>1 resultado encontrado na base de dados OVH"))
+                print((code_result + ">>>Intervalo numérico: {}".format(voip_number['number'])))
+                print((code_result + ">>>Cidade: {}".format(voip_number['city'])))
+                print((code_result + ">>>Zip code: {}".format(voip_number['zipCode'] if voip_number['zipCode'] is not None else '')))
                 askForExit()
 
 def replaceVariables(string):
@@ -574,3 +580,4 @@ try:
 except KeyboardInterrupt:
     print(("\n" + code_error + "A busca terminou. Até logo!"))
     sys.exit()
+#finalizado. 
